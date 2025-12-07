@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sakshi! 🎂✨</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #764ba2;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .math-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #764ba2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .qubit-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .qubit {
+            aspect-ratio: 1;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+        
+        .qubit-label {
+            font-size: 0.7em;
+            margin-top: 3px;
+        }
+        
+        .qubit:hover {
+            transform: scale(1.15) rotate(360deg);
+        }
+        
+        .qubit.measured {
+            animation: pulse 0.5s;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 20px auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        canvas {
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+        
+        .explanation {
+            background: rgba(255,255,255,0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        .message-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 2.5em;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin: 20px 0;
+            animation: fadeIn 1s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .char-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #667eea;
+        }
+        
+        .char-header {
+            font-size: 1.5em;
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .probability-bar {
+            width: 100%;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .probability-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .amplitude-display {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .amplitude-box {
+            background: #f5f7fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #764ba2;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-tracker {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        /* Confetti animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f0f;
+            animation: confetti-fall 3s ease-in-out forwards;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Auto measure button */
+        .auto-btn {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            margin-top: 10px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .qubit-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .message-display {
+                font-size: 1.5em;
+                letter-spacing: 2px;
+            }
+            
+            .amplitude-display {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="card">
+        <h1>🎉 Happy Birthday Sakshi Mandanna! 🎂</h1>
+        <p class="subtitle">A Quantum Birthday Wish Powered by Advanced Mathematics ✨</p>
+        
+        <div class="section">
+            <h2>🌟 The Quantum Mathematics Behind Your Gift</h2>
+            <div class="explanation">
+                This isn't just a simple encoding — your name is encoded using real quantum mechanics principles! Each letter undergoes quantum state preparation, superposition, and measurement following the Born rule.
+            </div>
+            
+            <div class="math-box">
+                <strong>🔬 Quantum State Representation:</strong><br>
+                |ψ⟩ = α|0⟩ + β|1⟩<br>
+                where α, β ∈ ℂ (complex numbers) and |α|² + |β|² = 1
+            </div>
+            
+            <div class="math-box">
+                <strong>📊 Born Rule (Measurement Probability):</strong><br>
+                P(|0⟩) = |α|² = |cos(θ/2)|²<br>
+                P(|1⟩) = |β|² = |sin(θ/2)|²<br>
+                where θ is the Bloch sphere angle
+            </div>
+            
+            <div class="math-box">
+                <strong>🔄 Hadamard Superposition:</strong><br>
+                H|0⟩ = (|0⟩ + |1⟩)/√2<br>
+                H|1⟩ = (|0⟩ - |1⟩)/√2<br>
+                Creates equal superposition with phase differences
+            </div>
+
+            <div class="math-box">
+                <strong>⚡ Quantum Entanglement Score:</strong><br>
+                E = Σᵢⱼ |⟨ψᵢ|ψⱼ⟩|² / n(n-1)<br>
+                Measures quantum correlations between qubits
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🎯 Interactive Quantum Encoding</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Click to encode "SAKSHI MANDANNA" in quantum superposition states!</p>
+            <button id="encodeBtn">Initialize Quantum System 🚀</button>
+            <button id="autoBtn" class="auto-btn hidden">Auto-Measure All Qubits ⚡</button>
+            
+            <div id="quantumDisplay" class="hidden">
+                <div class="progress-tracker">
+                    <h3 style="color: #667eea; margin-bottom: 10px;">Encoding Progress</h3>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p id="progressText" style="text-align: center; margin-top: 10px; color: #666;">Ready to begin...</p>
+                </div>
+
+                <div id="charContainer"></div>
+                
+                <div id="finalMessage" class="hidden">
+                    <div class="message-display" id="finalText"></div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalQubits">0</div>
+                            <div class="stat-label">Total Qubits</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalStates">0</div>
+                            <div class="stat-label">Possible States</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="entanglement">0%</div>
+                            <div class="stat-label">Entanglement</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="fidelity">0%</div>
+                            <div class="stat-label">Fidelity</div>
+                        </div>
+                    </div>
+
+                    <canvas id="blochCanvas" width="800" height="400"></canvas>
+                    <p style="text-align: center; color: #666; margin-top: 10px;">Bloch Sphere Representation of All Qubits</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>💎 Advanced Quantum Concepts Explained</h2>
+            
+            <div class="explanation">
+                <strong>🌀 Superposition:</strong> Unlike classical bits (0 or 1), qubits exist in a linear combination of both states simultaneously. The probability amplitudes α and β are complex numbers that determine the likelihood of measuring each state.
+            </div>
+            
+            <div class="explanation">
+                <strong>📐 Bloch Sphere:</strong> A 3D representation of a qubit's state. Any point on the sphere's surface represents a valid quantum state, with the north pole being |0⟩ and south pole being |1⟩.
+            </div>
+            
+            <div class="explanation">
+                <strong>🔗 Quantum Entanglement:</strong> When qubits become correlated in ways that have no classical equivalent. The entanglement score measures how much quantum correlation exists between your name's qubits.
+            </div>
+            
+            <div class="explanation">
+                <strong>🎲 Wave Function Collapse:</strong> Upon measurement, the quantum state "collapses" to a definite value (0 or 1) with probability given by the Born rule. Before measurement, the qubit exists in all states simultaneously!
+            </div>
+
+            <div class="explanation">
+                <strong>✨ Quantum Fidelity:</strong> Measures how accurately our quantum encoding preserved your name. Perfect encoding = 100% fidelity, meaning the quantum state perfectly represents the classical information.
+            </div>
+        </div>
+        
+        <div class="footer">
+            Made with quantum mathematics, complex amplitudes, and infinite love 💜<br>
+            <strong>Total Quantum Information: <span id="totalBits">0</span> qubits encoding <span id="totalChars">0</span> characters</strong><br>
+            Happy Birthday, Sakshi Mandanna! May your year be entangled with joy! 🎊
+        </div>
+    </div>
+    
+    <script>
+        const fullMessage = "SAKSHI MANDANNA";
+        let allCharData = [];
+        let currentCharIndex = 0;
+        let totalCorrectBits = 0;
+        let totalBits = 0;
+        let isAutoMode = false;
+        
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+        
+        // Confetti effect
+        function createConfetti() {
+            const colors = ['#667eea', '#764ba2', '#48bb78', '#f6ad55', '#fc8181', '#90cdf4'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 30);
+            }
+        }
+        
+        // Complex number operations
+        class Complex {
+            constructor(real, imag) {
+                this.real = real;
+                this.imag = imag;
+            }
+            
+            magnitude() {
+                return Math.sqrt(this.real * this.real + this.imag * this.imag);
+            }
+            
+            phase() {
+                return Math.atan2(this.imag, this.real);
+            }
+        }
+        
+        document.getElementById('encodeBtn').addEventListener('click', function() {
+            document.getElementById('quantumDisplay').classList.remove('hidden');
+            document.getElementById('autoBtn').classList.remove('hidden');
+            allCharData = [];
+            currentCharIndex = 0;
+            totalCorrectBits = 0;
+            totalBits = 0;
+            isAutoMode = false;
+            document.getElementById('charContainer').innerHTML = '';
+            document.getElementById('finalMessage').classList.add('hidden');
+            encodeNextCharacter();
+        });
+        
+        document.getElementById('autoBtn').addEventListener('click', function() {
+            isAutoMode = true;
+            this.classList.add('hidden');
+            autoMeasureCurrentChar();
+        });
+        
+        function autoMeasureCurrentChar() {
+            if (currentCharIndex >= allCharData.length) return;
+            
+            const charData = allCharData[currentCharIndex];
+            const unmeasuredQubits = charData.qubits.filter(q => !q.classList.contains('measured'));
+            
+            if (unmeasuredQubits.length > 0) {
+                measureQubit(unmeasuredQubits[0]);
+                setTimeout(autoMeasureCurrentChar, 100);
+            }
+        }
+        
+        function encodeNextCharacter() {
+            if (currentCharIndex >= fullMessage.length) {
+                showFinalResults();
+                return;
+            }
+            
+            const char = fullMessage[currentCharIndex];
+            const ascii = char.charCodeAt(0);
+            const binary = ascii.toString(2).padStart(8, '0');
+            
+            // Calculate quantum amplitudes for each bit
+            const amplitudes = [];
+            for (let i = 0; i < 8; i++) {
+                const bit = binary[i];
+                const theta = bit === '1' ? Math.PI : 0; // Bloch sphere angle
+                const phi = Math.random() * 2 * Math.PI; // Random phase
+                
+                const alpha = new Complex(Math.cos(theta/2), 0);
+                const beta = new Complex(
+                    Math.sin(theta/2) * Math.cos(phi),
+                    Math.sin(theta/2) * Math.sin(phi)
+                );
+                
+                amplitudes.push({ alpha, beta, expectedBit: bit });
+            }
+            
+            const charData = {
+                char,
+                ascii,
+                binary,
+                amplitudes,
+                measuredBits: [],
+                qubits: []
+            };
+            
+            allCharData.push(charData);
+            displayCharacter(charData, currentCharIndex);
+            
+            // Update progress
+            const progress = ((currentCharIndex + 1) / fullMessage.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = 
+                `Encoding character ${currentCharIndex + 1} of ${fullMessage.length}: "${char}"`;
+            
+            // Auto measure if in auto mode
+            if (isAutoMode) {
+                setTimeout(autoMeasureCurrentChar, 300);
+            }
+        }
+        
+        function displayCharacter(charData, index) {
+            const container = document.getElementById('charContainer');
+            const charDiv = document.createElement('div');
+            charDiv.className = 'char-container';
+            charDiv.id = `char-${index}`;
+            
+            charDiv.innerHTML = `
+                <div class="char-header">Character "${charData.char}" (ASCII: ${charData.ascii})</div>
+                <div style="text-align: center; margin: 10px 0; color: #666;">
+                    Binary: <strong>${charData.binary}</strong>
+                </div>
+                <div class="qubit-grid" id="qubits-${index}"></div>
+                <canvas id="canvas-${index}" width="800" height="200" style="margin-top: 20px;"></canvas>
+                <div id="probabilities-${index}" style="margin-top: 15px;"></div>
+            `;
+            
+            container.appendChild(charDiv);
+            
+            // Scroll to the new character
+            charDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Create qubits
+            const qubitGrid = document.getElementById(`qubits-${index}`);
+            for (let i = 0; i < 8; i++) {
+                const qubit = document.createElement('div');
+                qubit.className = 'qubit';
+                qubit.innerHTML = `<div>|ψ⟩</div><div class="qubit-label">Q${i}</div>`;
+                qubit.dataset.charIndex = index;
+                qubit.dataset.qubitIndex = i;
+                
+                qubit.addEventListener('click', function() {
+                    if (!this.classList.contains('measured')) {
+                        measureQubit(this);
+                    }
+                });
+                
+                qubitGrid.appendChild(qubit);
+                charData.qubits.push(qubit);
+            }
+            
+            drawQuantumState(charData, index);
+            showProbabilities(charData, index);
+        }
+        
+        function measureQubit(qubitElement) {
+            const charIndex = parseInt(qubitElement.dataset.charIndex);
+            const qubitIndex = parseInt(qubitElement.dataset.qubitIndex);
+            const charData = allCharData[charIndex];
+            const amp = charData.amplitudes[qubitIndex];
+            
+            // Born rule: measure based on probability
+            const prob0 = amp.alpha.magnitude() ** 2;
+            const measured = Math.random() < prob0 ? '0' : '1';
+            
+            qubitElement.innerHTML = `<div>${measured}</div><div class="qubit-label">Q${qubitIndex}</div>`;
+            qubitElement.classList.add('measured');
+            charData.measuredBits[qubitIndex] = measured;
+            
+            totalBits++;
+            if (measured === amp.expectedBit) {
+                totalCorrectBits++;
+            }
+            
+            // Check if all qubits measured
+            if (charData.measuredBits.length === 8 && charData.measuredBits.every(b => b !== undefined)) {
+                const binaryStr = charData.measuredBits.join('');
+                const measuredChar = String.fromCharCode(parseInt(binaryStr, 2));
+                
+                setTimeout(() => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.style.textAlign = 'center';
+                    resultDiv.style.marginTop = '15px';
+                    resultDiv.style.fontSize = '1.2em';
+                    resultDiv.style.color = measuredChar === charData.char ? '#48bb78' : '#f56565';
+                    resultDiv.innerHTML = `
+                        <strong>Measured Result: "${measuredChar}"</strong><br>
+                        <span style="font-size: 0.9em;">
+                            ${measuredChar === charData.char ? '✓ Perfect Match!' : '⚠ Quantum fluctuation detected'}
+                        </span>
+                    `;
+                    document.getElementById(`char-${charIndex}`).appendChild(resultDiv);
+                    
+                    currentCharIndex++;
+                    setTimeout(encodeNextCharacter, isAutoMode ? 500 : 1500);
+                }, 300);
+            }
+        }
+        
+        function drawQuantumState(charData, index) {
+            const canvas = document.getElementById(`canvas-${index}`);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const centerY = canvas.height / 2;
+            const spacing = canvas.width / 9;
+            
+            for (let i = 0; i < 8; i++) {
+                const x = spacing * (i + 0.5);
+                const amp = charData.amplitudes[i];
+                const prob1 = amp.beta.magnitude() ** 2;
+                
+                // Draw probability wave
+                ctx.beginPath();
+                ctx.strokeStyle = prob1 > 0.5 ? '#764ba2' : '#667eea';
+                ctx.lineWidth = 3;
+                
+                for (let t = 0; t < 100; t++) {
+                    const angle = (t / 100) * Math.PI * 2;
+                    const amplitude = prob1;
+                    const waveX = x + Math.cos(angle) * 25;
+                    const waveY = centerY + Math.sin(angle) * amplitude * 60;
+                    
+                    if (t === 0) ctx.moveTo(waveX, waveY);
+                    else ctx.lineTo(waveX, waveY);
+                }
+                ctx.stroke();
+                
+                // Draw amplitude vectors
+                ctx.beginPath();
+                ctx.strokeStyle = '#48bb78';
+                ctx.lineWidth = 2;
+                ctx.moveTo(x, centerY);
+                ctx.lineTo(x, centerY - prob1 * 70);
+                ctx.stroke();
+                
+                // Label
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`Q${i}`, x, canvas.height - 10);
+            }
+        }
+        
+        function showProbabilities(charData, index) {
+            const container = document.getElementById(`probabilities-${index}`);
+            let html = '<div class="amplitude-display">';
+            
+            for (let i = 0; i < 8; i++) {
+                const amp = charData.amplitudes[i];
+                const prob0 = (amp.alpha.magnitude() ** 2 * 100).toFixed(1);
+                const prob1 = (amp.beta.magnitude() ** 2 * 100).toFixed(1);
+                const phase = (amp.beta.phase() * 180 / Math.PI).toFixed(1);
+                
+                html += `
+                    <div class="amplitude-box">
+                        <strong>Q${i}</strong><br>
+                        P(|0⟩) = ${prob0}%<br>
+                        P(|1⟩) = ${prob1}%<br>
+                        φ = ${phase}°
+                    </div>
+                `;
+            }
+            
+            html += '</div>';
+            container.innerHTML = html;
+        }
+        
+        function showFinalResults() {
+            document.getElementById('finalMessage').classList.remove('hidden');
+            document.getElementById('finalText').textContent = fullMessage;
+            document.getElementById('autoBtn').classList.add('hidden');
+            
+            const totalQubits = fullMessage.length * 8;
+            const possibleStates = Math.pow(2, totalQubits);
+            const entanglement = calculateEntanglement();
+            const fidelity = (totalCorrectBits / totalBits * 100).toFixed(1);
+            
+            document.getElementById('totalQubits').textContent = totalQubits;
+            document.getElementById('totalStates').textContent = possibleStates.toExponential(2);
+            document.getElementById('entanglement').textContent = entanglement.toFixed(1) + '%';
+            document.getElementById('fidelity').textContent = fidelity + '%';
+            
+            document.getElementById('totalBits').textContent = totalQubits;
+            document.getElementById('totalChars').textContent = fullMessage.length;
+            
+            drawBlochSphere();
+            createConfetti();
+            
+            document.getElementById('progressText').textContent = '🎉 Quantum encoding complete!';
+            
+            // Scroll to final message
+            document.getElementById('finalMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        function calculateEntanglement() {
+            let totalCorrelation = 0;
+            let count = 0;
+            
+            for (let i = 0; i < allCharData.length; i++) {
+                const charData = allCharData[i];
+                for (let j = 0; j < 7; j++) {
+                    const amp1 = charData.amplitudes[j];
+                    const amp2 = charData.amplitudes[j + 1];
+                    
+                    // Simplified entanglement measure
+                    const correlation = Math.abs(
+                        amp1.beta.magnitude() * amp2.beta.magnitude() * 
+                        Math.cos(amp1.beta.phase() - amp2.beta.phase())
+                    );
+                    
+                    totalCorrelation += correlation;
+                    count++;
+                }
+            }
+            
+            return (totalCorrelation / count) * 100;
+        }
+        
+        function drawBlochSphere() {
+            const canvas = document.getElementById('blochCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 150;
+            
+            // Draw sphere
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw equator
+            ctx.beginPath();
+            ctx.ellipse(centerX, centerY, radius, radius * 0.3, 0, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#ddd';
+            ctx.stroke();
+            
+            // Draw axes
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY - radius - 20);
+            ctx.lineTo(centerX, centerY + radius + 20);
+            ctx.stroke();
+            
+            // Labels
+            ctx.fillStyle = '#667eea';
+            ctx.font = 'bold 16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('|0⟩', centerX, centerY - radius - 30);
+            ctx.fillText('|1⟩', centerX, centerY + radius + 40);
+            
+            // Plot qubit states
+            allCharData.forEach((charData, charIndex) => {
+                charData.amplitudes.forEach((amp, qubitIndex) => {
+                    const theta = Math.acos(amp.alpha.magnitude()) * 2;
+                    const phi = amp.beta.phase();
+                    
+                    const x = centerX + radius * Math.sin(theta) * Math.cos(phi);
+                    const y = centerY - radius * Math.cos(theta);
+                    const z = radius * Math.sin(theta) * Math.sin(phi);
+                    
+                    // 3D projection
+                    const projectedY = y + z * 0.3;
+                    
+                    ctx.beginPath();
+                    ctx.arc(x, projectedY, 4, 0, 2 * Math.PI);
+                    ctx.fillStyle = `hsl(${(charIndex / allCharData.length) * 360}, 70%, 60%)`;
+                    ctx.fill();
+                });
+            });
+        }
+    </script>
+</body>
+</html>
